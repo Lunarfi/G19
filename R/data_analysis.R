@@ -1,15 +1,15 @@
 library(ggplot2)
-product_data <- read.csv("../Data_upload/Product.csv")
-
-
-gg <- ggplot(product_data, aes(x = price, y = discount_rate)) +
+ggplot(mtcars, aes(x = wt, y = mpg)) + 
   geom_point() +
-  labs(title = "Price vs. Discount Rate",
-       x = "Price",
-       y = "Discount Rate")
+  geom_smooth(method = lm, se = FALSE) +
+  labs(title = "Regression Plot of Weight and Miles per Gallon",
+       x = "Weight (1000 lbs)",
+       y = "Miles per Gallon")
 
-if (!file.exists("figures")) {
-  dir.create("figures")
-}
-ggsave("figures/price_vs_discount.png", plot = gg)
+this_filename_date <- as.character(Sys.Date())
+# format the Sys.time() to show only hours and minutes 
+this_filename_time <- as.character(format(Sys.time(), format = "%H_%M"))
+ggsave(paste0("figures/regression_plot_",
+              this_filename_date,"_",
+              this_filename_time,".png"))
 
