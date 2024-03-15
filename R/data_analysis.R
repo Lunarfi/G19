@@ -9,7 +9,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 this_filename_date <- as.character(Sys.Date())
 # format the Sys.time() to show only hours and minutes 
 this_filename_time <- as.character(format(Sys.time(), format = "%H_%M"))
-ggsave(paste0("figures/regression_plot_",
+ggsave(paste0("figures/_",
               this_filename_date,"_",
               this_filename_time,".png"))
 
