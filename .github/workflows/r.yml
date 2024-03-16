@@ -26,10 +26,10 @@ jobs:
       - name: Install packages
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          Rscript -e 'install.packages(c("ggplot2","dplyr", "readr", "RSQLite"))'
+          Rscript -e 'install.packages(c("ggplot2","dplyr", "readr", "RSQLite", "lubridate"))'
       - name: Execute R script
         run: |
-          Rscript R/data_analysis.R
+          Rscript loaddata.Rmd
       - name: Add files
         run: |
           git config --global user.email "yingshanjiang6@gmail.com"
