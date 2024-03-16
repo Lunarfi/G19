@@ -17,7 +17,7 @@ my_connection <- RSQLite::dbConnect(RSQLite::SQLite(),"mydatabase.db")
 ```{r}
 Category <- readr::read_csv("Data_upload/Category.csv")
 Customer <- readr::read_csv("Data_upload/Customer.csv")
-Order <- readr::read_csv("Data_upload/Order.csv")
+Orders <- readr::read_csv("Data_upload/Order.csv")
 Payment <- readr::read_csv("Data_upload/Payment.csv")
 Product <- readr::read_csv("Data_upload/Product.csv")
 Promotion <- readr::read_csv("Data_upload/Promotion.csv")
@@ -65,6 +65,9 @@ if(length(unique(Category$category_id)) != nrow(Category)) {
 if (valid_cat == 1) {
   print("Table: Category - Status: OK")
 } else {print("Table: Category - Status: ERROR")}
+
+
+
 ```
 
 ```{r}
@@ -115,61 +118,61 @@ if (valid_cus == 1) {
 
 ```{r}
 #ORDER
-for (i in 1:nrow(Order))
+for (i in 1:nrow(Orders))
 {
   #check primary key exists
-  if (is.na(Order$order_id[i])) { 
-    print(paste("Table: Order - Error: order_id is NULL on row",i))
+  if (is.na(Orders$order_id[i])) { 
+    print(paste("Table: Orders - Error: order_id is NULL on row",i))
     valid_ord = 0
   }
   
   #check foreign key exists
-  if (is.na(Order$product_id[i])) { 
-    print(paste("Table: Order - Error: product_id is NULL on row",i))
+  if (is.na(Orders$product_id[i])) { 
+    print(paste("Table: Orders - Error: product_id is NULL on row",i))
     valid_ord = 0
   }
   
-  if (is.na(Order$customer_id[i])) { 
-    print(paste("Table: Order - Error: customer_id is NULL on row",i))
+  if (is.na(Orders$customer_id[i])) { 
+    print(paste("Table: Orders - Error: customer_id is NULL on row",i))
     valid_ord = 0
   }
 
   #check character length
-  if (nchar(Order$order_id[i]) > 6) { 
-    print(paste("Table: Order - Error: order_id more than 6 characters on row",i))
+  if (nchar(Orders$order_id[i]) > 6) { 
+    print(paste("Table: Orders - Error: order_id more than 6 characters on row",i))
     valid_ord = 0
   }
   
-  if (nchar(Order$product_id[i]) > 6) { 
-    print(paste("Table: Order - Error: product_id more than 6 characters on row",i))
+  if (nchar(Orders$product_id[i]) > 6) { 
+    print(paste("Table: Orders - Error: product_id more than 6 characters on row",i))
     valid_ord = 0
   }
   
-  if (nchar(Order$customer_id[i]) > 6) { 
-    print(paste("Table: Order - Error: customer_id more than 6 characters on row",i))
+  if (nchar(Orders$customer_id[i]) > 6) { 
+    print(paste("Table: Orders - Error: customer_id more than 6 characters on row",i))
     valid_ord = 0
   }
 }
 
 #check primary key is unique
-if(length(unique(Order$order_id)) != nrow(Order)) {
-  print(paste("Table: Order - Error: duplicated order_id"))
+if(length(unique(Orders$order_id)) != nrow(Orders)) {
+  print(paste("Table: Orders - Error: duplicated order_id"))
   valid_ord = 0
 }
 
 #fix data type
-Order$order_quantity <- as.numeric(Order$order_quantity)
-Order$rating_score <- as.numeric(Order$rating_score)
-Order$order_date <- mdy(Order$order_date)
-Order$order_approval_date <- mdy(Order$order_approval_date)
-Order$order_delivery_date <- mdy(Order$order_delivery_date)
-Order$rating_date <- mdy(Order$rating_date)
+Orders$order_quantity <- as.numeric(Orders$order_quantity)
+Orders$rating_score <- as.numeric(Orders$rating_score)
+Orders$order_date <- mdy(Orders$order_date)
+Orders$order_approval_date <- mdy(Orders$order_approval_date)
+Orders$order_delivery_date <- mdy(Orders$order_delivery_date)
+Orders$rating_date <- mdy(Orders$rating_date)
 
 
 #final check result
 if (valid_ord == 1) {
-  print("Table: Order - Status: OK")
-} else {print("Table: Order - Status: ERROR")}
+  print("Table: Orders - Status: OK")
+} else {print("Table: Orders - Status: ERROR")}
 ```
 
 ```{r}
@@ -437,8 +440,8 @@ for (i in 1:nrow(Supplier))
   Supplier$seller_city[i] <- substring(Supplier$seller_city[i],1,50)
   
   #rate convertion to numeric
-  Supplier$platform_rate[i] <- parse_number(Supplier$`platform rate`[i])
-  Supplier$tax_rate[i] <- parse_number(Supplier$`tax rate`[i])
+  Supplier$`platform rate`[i] <- parse_number(Supplier$`platform rate`[i])
+  Supplier$`tax rate`[i] <- parse_number(Supplier$`tax rate`[i])
 }
 
 #check primary key is unique
@@ -456,14 +459,15 @@ if(length(unique(Supplier$seller_email)) != nrow(Supplier)) {
 #fix data type
 Supplier$seller_phone <- as.numeric(Supplier$seller_phone)
 Supplier$registration_date <- mdy(Supplier$registration_date)
-Supplier$platform_rate <- as.numeric(Supplier$`platform rate`)
-Supplier$tax_rate <- as.numeric(Supplier$`tax rate`)
+Supplier$`platform rate` <- as.numeric(Supplier$`platform rate`)
+Supplier$`tax rate` <- as.numeric(Supplier$`tax rate`)
 
 
 #final check result
 if (valid_sup == 1) {
   print("Table: Supplier - Status: OK")
 } else {print("Table: Supplier - Status: ERROR")}
+
 ```
 ```{r}
 if (valid_cat == 1) {
@@ -473,7 +477,7 @@ if (valid_cus == 1) {
   RSQLite::dbWriteTable(my_connection, "Customer", Customer, append = TRUE)}
 
 if (valid_ord == 1) {
-  RSQLite::dbWriteTable(my_connection, "Order", Order, append = TRUE)}
+  RSQLite::dbWriteTable(my_connection, "Orders", Orders, append = TRUE)}
 
 if (valid_pay == 1) {
   RSQLite::dbWriteTable(my_connection, "Payment", Payment, append = TRUE)}
@@ -500,7 +504,7 @@ if (valid_sup == 1) {
 
 ```{sql connection=my_connection}
 SELECT *
-FROM Product;
+FROM Orders;
 ```
 
 

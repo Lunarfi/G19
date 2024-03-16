@@ -10,10 +10,10 @@ CREATE TABLE IF NOT EXISTS Orders(
    customer_id VARCHAR(6) NOT NULL,
    order_date DATE,
    order_quantity INTEGER,
-   order_status CHECK (Order_status IN ('Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled')),
-   order_approval_date DATE NOT NULL,
-   order_delivery_date DATE NOT NULL,
-   rating_date DATE NOT NULL,
+   order_status VARCHAR(20),
+   order_approval_date DATE,
+   order_delivery_date DATE,
+   rating_date DATE,
    rating_score INT,
    rating_comment CHAR,
    FOREIGN KEY ('customer_id') REFERENCES Customer ('customer_id'),
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS 'Product'(
   'supplier_id' VARCHAR(6) NOT NULL,
   'product_name' CHAR,
   'price' FLOAT,
-  ‘discount_rate’ FLOAT,
+  'discount_rate' FLOAT,
   FOREIGN KEY ('category_id') REFERENCES Category('category_id'),
   FOREIGN KEY ('supplier_id') REFERENCES Supplier('supplier_id')
 );"
@@ -80,10 +80,10 @@ CREATE TABLE IF NOT EXISTS 'Supplier'(
 Settlement_schema <- "
 CREATE TABLE IF NOT EXISTS Settlement (
    settlement_id VARCHAR(6) PRIMARY KEY,
-   supplier_id VARCHAR(6),
+   sale_id VARCHAR(6),
    settlement_date DATE,
    settlement_type TEXT,
-   FOREIGN KEY ('supplier_id') REFERENCES Supplier('supplier_id')
+   FOREIGN KEY ('sale_id') REFERENCES Sales('sale_id')
 );"
 
 # Define the schema for sales table
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS Sales (
 Category_schema <- "
 CREATE TABLE IF NOT EXISTS Category (
   category_id VARCHAR(6) PRIMARY KEY,
-  category_name TEXT
+  category_name VARCHAR(6)
 );"
 
 
