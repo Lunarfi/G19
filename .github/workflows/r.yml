@@ -28,10 +28,10 @@ jobs:
           Rscript -e 'install.packages(c("ggplot2","dplyr", "readr", "RSQLite", "lubridate"))'
       - name: Create sql schema
         run: |
-          Rscript load_data.R
+          Rscript data_schema.R
       - name: Load data
         run: |
-          Rscript data_schema.R
+          Rscript load_data.R
       - name: Data validation
         run: |
           Rscript validation.R
