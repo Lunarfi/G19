@@ -28,7 +28,7 @@ jobs:
           Rscript -e 'install.packages(c("ggplot2","dplyr", "readr", "RSQLite", "lubridate"))'
       - name: Delete database file
         run: |
-          rm -f mydatabase.db
+          rm -vf mydatabase.db
       - name: Create sql schema
         run: |
           Rscript data_schema.R
