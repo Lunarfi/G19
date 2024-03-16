@@ -30,14 +30,6 @@ jobs:
       - name: Execute R script
         run: |
           Rscript validation.R
-      - name: Add files
-        run: |
-          git config --global user.email "yingshanjiang6@gmail.com"
-          git config --global user.name "Lunarfi"
-          git add --all figures/
-      - name: Commit files
-        run: |
-          git commit -m "Add"
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
