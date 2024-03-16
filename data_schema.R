@@ -1,4 +1,15 @@
 library(RSQLite)
+library(DBI)
+
+# Set database file name
+db_file <- "mydatabase.db"
+
+# Check if database file exists
+if (file.exists(db_file)) {
+  # If exists, delete the file
+  unlink(db_file)
+}
+
 
 data <- dbConnect(SQLite(), "mydatabase.db")
 
