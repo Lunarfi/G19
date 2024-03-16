@@ -30,22 +30,49 @@ read_and_categorize_csv <- function(directory) {
     # Determine which data frame to store the data
     if (grepl("Customer", file_name, ignore.case = TRUE)) {
       data_frames$Customer <- rbind(data_frames$Customer, data)
+      # Output variable names
+      cat("Variables in Customer data frame:\n")
+      print(names(data_frames$Customer))
     } else if (grepl("Category", file_name, ignore.case = TRUE)) {
       data_frames$Category <- rbind(data_frames$Category, data)
+      # Output variable names
+      cat("Variables in Category data frame:\n")
+      print(names(data_frames$Category))
     } else if (grepl("Order", file_name, ignore.case = TRUE)) {
       data_frames$Orders <- rbind(data_frames$Orders, data)
+      # Output variable names
+      cat("Variables in Orders data frame:\n")
+      print(names(data_frames$Orders))
     } else if (grepl("Payment", file_name, ignore.case = TRUE)) {
       data_frames$Payment <- rbind(data_frames$Payment, data)
+      # Output variable names
+      cat("Variables in Payment data frame:\n")
+      print(names(data_frames$Payment))
     } else if (grepl("Product", file_name, ignore.case = TRUE)) {
       data_frames$Product <- rbind(data_frames$Product, data)
+      # Output variable names
+      cat("Variables in Product data frame:\n")
+      print(names(data_frames$Product))
     } else if (grepl("Promotion", file_name, ignore.case = TRUE)) {
       data_frames$Promotion <- rbind(data_frames$Promotion, data)
+      # Output variable names
+      cat("Variables in Promotion data frame:\n")
+      print(names(data_frames$Promotion))
     } else if (grepl("Sale", file_name, ignore.case = TRUE)) {
       data_frames$Sales <- rbind(data_frames$Sales, data)
+      # Output variable names
+      cat("Variables in Sales data frame:\n")
+      print(names(data_frames$Sales))
     } else if (grepl("Settlement", file_name, ignore.case = TRUE)) {
       data_frames$Settlement <- rbind(data_frames$Settlement, data)
+      # Output variable names
+      cat("Variables in Settlement data frame:\n")
+      print(names(data_frames$Settlement))
     } else if (grepl("Supplier", file_name, ignore.case = TRUE)) {
       data_frames$Supplier <- rbind(data_frames$Supplier, data)
+      # Output variable names
+      cat("Variables in Supplier data frame:\n")
+      print(names(data_frames$Supplier))
     }
   }
   
