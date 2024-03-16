@@ -505,8 +505,8 @@ for (i in 1:nrow(Supplier))
   Supplier$seller_city[i] <- substring(Supplier$seller_city[i],1,50)
   
   #rate convertion to numeric
-  Supplier$platform_rate[i] <- parse_number(Supplier$platform_rate[i])
-  Supplier$tax_rate[i] <- parse_number(Supplier$tax_rate[i])
+  #Supplier$platform_rate[i] <- parse_number(Supplier$platform_rate[i])
+  #Supplier$tax_rate[i] <- parse_number(Supplier$tax_rate[i])
 }
 
 #check primary key is unique
