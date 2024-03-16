@@ -504,13 +504,5 @@ SELECT COUNT(*)
 FROM Sales;
 
 ```
-```{r}
-# 使用 duplicated() 函数检测 sale_id 是否重复
-duplicate_sales <- Sales[duplicated(Sales$sale_id), ]
 
-# 显示重复的 sale_id
-print(duplicate_sales$'sale_id')
-
-
-```
 
