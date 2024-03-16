@@ -3,7 +3,7 @@ library(RSQLite)
 data <- dbConnect(SQLite(), "mydatabase.db")
 
 # Define the schema for the order table
-Order_schema <- "
+Orders_schema <- "
 CREATE TABLE IF NOT EXISTS Orders(
    order_id VARCHAR(6) PRIMARY KEY,
    product_id VARCHAR(6) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Orders(
    order_approval_date DATE NOT NULL,
    order_delivery_date DATE NOT NULL,
    rating_date DATE NOT NULL,
-   rating_score FLOAT,
+   rating_score INT,
    rating_comment CHAR,
    FOREIGN KEY ('customer_id') REFERENCES Customer ('customer_id'),
    FOREIGN KEY ('product_id') REFERENCES Product ('product_id')
@@ -45,7 +45,6 @@ CREATE TABLE IF NOT EXISTS 'Customer'(
   'customer_phone' INT(11),
   'customer_address' VARCHAR ,
   'customer_city' CHAR,
-  'customer_state' CHAR,
   'customer_postcode' VARCHAR
 );"
 
@@ -64,11 +63,11 @@ CREATE TABLE IF NOT EXISTS Payment (
 Supplier_schema <- "
 CREATE TABLE IF NOT EXISTS 'Supplier'(
 'supplier_id' VARCHAR(6) PRIMARY KEY,
-'seller_name'  TEXT,
+'seller_first_name'  TEXT,
+'seller_last_name'  TEXT,
 'seller_email' VARCHAR(200),
 'seller_address' VARCHAR(200),
 'seller_city' CHAR(50) ,
-'seller_state' CHAR(50) ,
 'seller_postcode' VARCHAR,
 'seller_phone' INT(11) ,
 'registration_date' DATE ,
@@ -81,10 +80,10 @@ CREATE TABLE IF NOT EXISTS 'Supplier'(
 Settlement_schema <- "
 CREATE TABLE IF NOT EXISTS Settlement (
    settlement_id VARCHAR(6) PRIMARY KEY,
+   supplier_id VARCHAR(6),
    settlement_date DATE,
-   settlement_type BINARY,
-   sale_id VARCHAR(6),
-   FOREIGN KEY ('sale_id') REFERENCES Sales('sale_id')
+   settlement_type TEXT,
+   FOREIGN KEY ('supplier_id') REFERENCES Supplier('supplier_id')
 );"
 
 # Define the schema for sales table
@@ -102,9 +101,7 @@ CREATE TABLE IF NOT EXISTS Sales (
 Category_schema <- "
 CREATE TABLE IF NOT EXISTS Category (
   category_id VARCHAR(6) PRIMARY KEY,
-  product_id VARCHAR(6),
-  category_name TEXT,
-  category_level INTEGER
+  category_name TEXT
 );"
 
 

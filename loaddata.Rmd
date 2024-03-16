@@ -16,7 +16,7 @@ Order <- readr::read_csv("Data_upload/Order.csv")
 Payment <- readr::read_csv("Data_upload/Payment.csv")
 Product <- readr::read_csv("Data_upload/Product.csv")
 Promotion <- readr::read_csv("Data_upload/Promotion.csv")
-Sales <- readr::read_csv("Data_upload/Sales.csv")
+Sales <- readr::read_csv("Data_upload/Sale.csv")
 Settlement <- readr::read_csv("Data_upload/Settlement.csv")
 Supplier <- readr::read_csv("Data_upload/Supplier.csv")
 
@@ -35,8 +35,22 @@ RSQLite::dbWriteTable(my_connection, "Supplier", Supplier, append = TRUE)
 
 ```
 
-```{sql connection=my_connection}
+```{sql connection=my_connection, output.var="my_data"}
 SELECT *
 FROM product
+```
+
+```{r}
+# Check if there are duplicate rows in the data frame
+duplicate_rows <- duplicated(Product)
+
+num_duplicates <- sum(duplicate_rows)
+
+if (num_duplicates > 0) {
+  print(paste("There are", num_duplicates, "duplicate rows in the data frame."))
+} else {
+  print("There are no duplicate rows in the data frame.")
+}
+
 ```
 
