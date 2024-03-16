@@ -1,4 +1,4 @@
-product_id,product_name,category_id,suppler_id,price,discount_rate
+product_id,product_name,category_id,supplier_id,price,discount_rate
 45387s,Sunscreen Lotion,19565c,03268l,93.72,15
 24752z,Multivitamin Supplements,12087n,93984z,93.03,18
 48150m,Facial Cleanser,12087n,70384s,21,8
