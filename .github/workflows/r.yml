@@ -32,9 +32,6 @@ jobs:
       - name: Create sql schema
         run: |
           Rscript data_schema.R
-      - name: Load data
-        run: |
-          Rscript load_data.R
       - name: Data validation
         run: |
           Rscript validation.R
