@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS 'Supplier'(
 'seller_postcode' VARCHAR,
 'seller_phone' INT(11) ,
 'registration_date' DATE ,
-'platform rate' FLOAT,
-'tax rate' FLOAT
+'platform_rate' FLOAT,
+'tax_rate' FLOAT
 );"
 
 

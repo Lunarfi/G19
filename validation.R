@@ -3,15 +3,6 @@ library(readr)
 
 my_connection <- RSQLite::dbConnect(RSQLite::SQLite(),"mydatabase.db")
 
-Category <- readr::read_csv("Data_upload/Category.csv")
-Customer <- readr::read_csv("Data_upload/Customer.csv")
-Orders <- readr::read_csv("Data_upload/Order.csv")
-Payment <- readr::read_csv("Data_upload/Payment.csv")
-Product <- readr::read_csv("Data_upload/Product.csv")
-Promotion <- readr::read_csv("Data_upload/Promotion.csv")
-Sales <- readr::read_csv("Data_upload/Sale.csv")
-Settlement <- readr::read_csv("Data_upload/Settlement.csv")
-Supplier <- readr::read_csv("Data_upload/Supplier.csv")
 
 library(lubridate)
 
@@ -414,8 +405,8 @@ for (i in 1:nrow(Supplier))
   Supplier$seller_city[i] <- substring(Supplier$seller_city[i],1,50)
   
   #rate convertion to numeric
-  Supplier$`platform rate`[i] <- parse_number(Supplier$`platform rate`[i])
-  Supplier$`tax rate`[i] <- parse_number(Supplier$`tax rate`[i])
+  Supplier$platform_rate[i] <- parse_number(Supplier$platform_rate[i])
+  Supplier$tax_rate[i] <- parse_number(Supplier$tax_rate[i])
 }
 
 #check primary key is unique
@@ -433,8 +424,8 @@ if(length(unique(Supplier$seller_email)) != nrow(Supplier)) {
 #fix data type
 Supplier$seller_phone <- as.numeric(Supplier$seller_phone)
 Supplier$registration_date <- mdy(Supplier$registration_date)
-Supplier$`platform rate` <- as.numeric(Supplier$`platform rate`)
-Supplier$`tax rate` <- as.numeric(Supplier$`tax rate`)
+Supplier$platform_rate <- as.numeric(Supplier$platform_rate)
+Supplier$tax_rate <- as.numeric(Supplier$tax_rate)
 
 
 #final check result
