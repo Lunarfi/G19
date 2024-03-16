@@ -324,7 +324,7 @@ for (i in 1:nrow(Sales))
 #check primary key is unique
 Sales <- Sales[!duplicated(Sales$sale_id) & !duplicated(Sales$sale_id, fromLast = TRUE), ]
 
-if(length(unique(Sales$sale_id)) != nrow(Sales_unique)) {
+if(length(unique(Sales$sale_id)) != nrow(Sales)) {
   print(paste("Table: Sales - Error: duplicated sale_id"))
   valid_sal = 0
 }
