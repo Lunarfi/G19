@@ -1,4 +1,4 @@
-supplier_id,seller_first_name,seller_last_name,seller_email,seller_postcode,seller_address,seller_city,seller_phone,registration_date,platform rate,tax rate
+supplier_id,seller_first_name,seller_last_name,seller_email,seller_postcode,seller_address,seller_city,seller_phone,registration_date,platform_rate,tax_rate
 28185u,Conway,Abberley,cabberley3@exblog.jp,MK1 1AB,"14 Cypress Drive, Milton Keynes",Milton Keynes,7504050462,9/16/2006,8%,10%
 24853q,Gerrie,McKeachie,gmckeachie4@sitemeter.com,SS1 1AB,"27 Aster Close, Southend-on-Sea",Southend-on-Sea,7526811011,7/15/2001,18%,10%
 78560p,Alyss,Rapelli,arapelli5@wired.com,GY1 1AA,"41 Elm Avenue, Guernsey",Guernsey,7000317649,01-01-2002,11%,10%
