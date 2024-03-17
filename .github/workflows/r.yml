@@ -5,6 +5,9 @@ on:
 #    - cron: '0 */3 * * *' # Run every 3 hours
   push:
     branches: [ main ]
+    paths:
+      - 'Data_upload/**'  # Listen for changes in the Data_upload directory
+      - '**.R'            # Listen for changes in all R files     
 jobs:
   build:
     runs-on: ubuntu-latest
