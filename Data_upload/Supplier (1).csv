@@ -1,0 +1,48 @@
+supplier_id,seller_first_name,seller_last_name,seller_email,seller_postcode,seller_address,seller_city,seller_phone,registration_date,platform_rate,tax_rate
+28185u,Conway,Abberley,cabberley3@exblog.jp,MK1 1AB,"14 Cypress Drive, Milton Keynes",Milton Keynes,7504050462,9/16/2006,8%,10%
+24853q,Gerrie,McKeachie,gmckeachie4@sitemeter.com,SS1 1AB,"27 Aster Close, Southend-on-Sea",Southend-on-Sea,7526811011,7/15/2001,18%,10%
+78560p,Alyss,Rapelli,arapelli5@wired.com,GY1 1AA,"41 Elm Avenue, Guernsey",Guernsey,7000317649,01-01-2002,11%,10%
+07654c,Rickey,Olle,rolle6@ask.com,PA1 1AA,"46 Oak Close, Paisley",Paisley,7963156994,6/24/2004,16%,10%
+19425f,Mareah,Robatham,mrobatham7@gov.uk,L6 8HJ,"10 Fir Lane, Liverpool",Liverpool,7200470292,10-12-2013,18%,10%
+31691z,Lib,Larsen,llarsen8@simplemachines.org,CH1 1AA,"2 Oak Avenue, Chester",Chester,7248142045,9/26/2005,15%,10%
+12943g,Niki,Denisot,ndenisot9@home.pl,SK1 1AB,"24 Mulberry Lane, Stockport",Stockport,7362163652,9/19/2004,13%,10%
+41002w,Hinze,Marple,hmarplea@gnu.org,LS6 3RD,"12 Juniper Lane, Leeds",Leeds,7210507959,06-09-2002,17%,10%
+88228c,Ceil,Comfort,ccomfortb@g.co,WA1 1AA,"31 Oak Road, Warrington",Warrington,7272961946,10-04-2018,18%,10%
+50696s,Dunstan,Filtness,dfiltnessc@yahoo.co.jp,WN1 1AA,"33 Cedar Avenue, Wigan",Wigan,7586562909,7/24/2001,10%,10%
+89782w,Oberon,Elders,oeldersd@indiatimes.com,FY1 4XY,"6 Birch Street, Blackpool",Blackpool,7321943864,11/24/2011,10%,10%
+81867y,Matilde,Bondesen,mbondesene@google.cn,CH1 1AA,"2 Oak Avenue, Chester",Chester,7810411619,4/22/2005,9%,10%
+01314q,Farica,Kobes,fkobesf@opensource.org,PH1 1AA,"47 Pine Lane, Perth",Perth,7141494365,11-09-2010,11%,10%
+39130t,Lynnell,Linggood,llinggoodg@icq.com,WN1 1AA,"33 Cedar Avenue, Wigan",Wigan,7770045340,1/26/2006,15%,10%
+89527c,Amabel,Woodus,awoodush@google.nl,PH1 1AA,"47 Pine Lane, Perth",Perth,7070129279,07-12-2006,12%,10%
+49096c,Jenda,Forson,jforsoni@msn.com,LN1 1AA,"11 Hickory Close, Lincoln",Lincoln,7167995583,11-09-2012,12%,10%
+07920r,Tamas,Matysik,tmatysikj@pen.io,PR1 1AA,"20 Redwood Road, Preston",Preston,7519783451,03-02-2006,19%,10%
+04270m,Saree,Blazynski,sblazynskik@furl.net,TS1 1AA,"30 Maple Avenue, Middlesbrough",Middlesbrough,7470931744,11/24/2013,20%,10%
+82735d,Phaidra,Damsell,pdamselll@bloomberg.com,NG1 2CD,"15 Walnut Close, Nottingham",Nottingham,7724021738,02-02-2021,8%,10%
+17202g,Brannon,Hurlston,bhurlstonm@timesonline.co.uk,AB1 1AA,"37 Spruce Road, Aberdeen",Aberdeen,7539185511,09-08-2015,11%,10%
+21114b,Kyla,Beare,kbearen@mac.com,TF1 1AB,"29 Orchard Close, Telford",Telford,7323775825,3/24/2016,8%,10%
+39862x,Candida,Lethem,clethemo@ebay.co.uk,FY1 4XY,"6 Birch Street, Blackpool",Blackpool,7177494495,3/30/2019,13%,10%
+91928z,Vilhelmina,Clewer,vclewerp@dot.gov,IM1 1AA,"42 Oak Street, Isle of Man",Isle of Man,7583786012,03-11-2012,15%,10%
+70384s,Arleen,Bleby,ablebyq@home.pl,NG1 2CD,"15 Walnut Close, Nottingham",Nottingham,7963823825,6/21/2014,9%,10%
+97382p,Rozelle,Bauldrey,rbauldreyr@php.net,PE1 1AA,"18 Holly Street, Peterborough",Peterborough,7809783324,1/26/2008,12%,10%
+18044t,Nathalie,Bonafacino,nbonafacinos@umn.edu,ZE1 0AA,"49 Elm Lane, Lerwick",Lerwick,7659336222,3/13/2009,15%,10%
+72106x,Nani,Desforges,ndesforgest@hatena.ne.jp,OL1 1XY,"17 Magnolia Road, Oldham",Oldham,7149829013,11/30/2015,17%,10%
+82111p,Andrew,McDermott-Row,amcdermottrowu@ucoz.ru,BD1 4TR,"1 Elm Street, Bradford",Bradford,7314647127,3/19/2004,16%,10%
+84475z,Sheba,Caldeyroux,scaldeyrouxv@bbb.org,KW1 1AA,"45 Elm Road, Kirkwall",Kirkwall,7684944682,8/24/2018,14%,10%
+72808j,Courtney,Lettley,clettleyw@dropbox.com,AB1 1AA,"37 Spruce Road, Aberdeen",Aberdeen,7175517386,8/27/2015,20%,10%
+83698w,Alidia,Babst,ababstx@1und1.de,MK1 1AB,"14 Cypress Drive, Milton Keynes",Milton Keynes,7196382786,12/24/2013,16%,10%
+99243y,Katinka,Guilliatt,kguilliatty@seesaa.net,WV1 1AA,"36 Birch Avenue, Wolverhampton",Wolverhampton,7423229967,01-05-2002,15%,10%
+97308w,Marleah,Raincin,mraincinz@tinypic.com,PH1 1AA,"47 Pine Lane, Perth",Perth,7290793911,06-02-2002,10%,10%
+11866m,Jayme,Anning,janning10@spotify.com,DD1 1AA,"38 Ash Lane, Dundee",Dundee,7337307329,11/14/2010,8%,10%
+67153s,Kandace,Yurkevich,kyurkevich11@nytimes.com,HU1 2XX,"8 Ash Court, Hull",Hull,7599536399,12-12-2015,18%,10%
+58319w,Nola,MacShirie,nmacshirie12@feedburner.com,SK1 1AB,"24 Mulberry Lane, Stockport",Stockport,7158452540,4/19/2000,14%,10%
+15418t,Rubia,Folk,rfolk13@arizona.edu,S6 1XX,"22 Linden Close, Sheffield",Sheffield,7720099185,04-10-2016,15%,10%
+93984z,Allis,Muge,amuge14@msu.edu,WS1 1AA,"35 Willow Road, Walsall",Walsall,7236563406,02-07-2013,19%,10%
+76566f,Irena,Dorber,idorber15@unesco.org,JE1 1AA,"44 Cedar Close, Jersey",Jersey,7223305987,4/23/2002,18%,10%
+14329d,Kellsie,Strover,kstrover16@1und1.de,HU1 2XX,"8 Ash Court, Hull",Hull,7094061352,6/24/2021,17%,10%
+14559o,Loraine,Lorence,llorence17@nba.com,NG1 2CD,"15 Walnut Close, Nottingham",Nottingham,7842000979,2/28/2001,15%,10%
+69150j,Bernie,Durnill,bdurnill18@blog.com,OL1 1XY,"17 Magnolia Road, Oldham",Oldham,7666413559,7/21/2019,10%,10%
+65868v,Leodora,Hacon,lhacon19@kickstarter.com,SN1 1AA,"25 Dogwood Drive, Swindon",Swindon,7923132837,3/22/2020,8%,10%
+03268l,Cello,Tewkesberry,ctewkesberry1a@ucoz.com,DN1 3AB,"5 Cedar Lane, Doncaster",Doncaster,7156036531,4/20/2002,8%,10%
+40172i,Levin,Wadlow,lwadlow1b@vimeo.com,HD1 3AA,"7 Spruce Drive, Huddersfield",Huddersfield,7962898238,11-06-2004,17%,10%
+09817c,Sheila-kathryn,Colston,scolston1c@army.mil,PE1 1AA,"18 Holly Street, Peterborough",Peterborough,7630241753,3/16/2007,17%,10%
+97584v,Cherice,Oakinfold,coakinfold1d@cbslocal.com,LN1 1AA,"11 Hickory Close, Lincoln",Lincoln,7926744497,11/22/2009,13%,10%
