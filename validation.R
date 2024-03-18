@@ -100,12 +100,16 @@ Supplier <- data_frames$Supplier
 
 library(RSQLite)
 library(readr)
+library(lubridate)
 
 my_connection <- RSQLite::dbConnect(RSQLite::SQLite(),"mydatabase.db")
 
+#define function to check email
+isValidEmail <- function(x) {
+  grepl("\\<[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\>", as.character(x), ignore.case=TRUE)
+}
 
-library(lubridate)
-
+#define variable to check each table validity
 valid_cat = 1
 valid_cus = 1
 valid_ord = 1
@@ -131,6 +135,8 @@ if (nchar(Category$category_id[i]) > 6) {
 } 
 
 #check primary key is unique
+Category <- Category[!duplicated(Category$category_id) & !duplicated(Category$category_id, fromLast = TRUE), ]
+
 if(length(unique(Category$category_id)) != nrow(Category)) {
   print(paste("Table: Category - Error: duplicated category_id"))
   valid_cat = 0
@@ -157,6 +163,13 @@ for (i in 1:nrow(Customer))
     print(paste("Table: Customer - Error: customer_id more than 6 characters on row",i))
     valid_cus = 0
   }
+  
+  #check email format
+  if (isValidEmail(Customer$customer_email[i]) == FALSE) {
+    print(paste("Table: Customer - Error: customer_email format unsupported on row",i))
+    valid_cus = 0
+  }
+  
   
   #characters limit
   Customer$customer_first_name[i] <- substring(Customer$customer_first_name[i],1,50)
@@ -224,6 +237,8 @@ for (i in 1:nrow(Orders))
 }
 
 #check primary key is unique
+Orders <- Orders[!duplicated(Orders$order_id) & !duplicated(Orders$order_id, fromLast = TRUE), ]
+
 if(length(unique(Orders$order_id)) != nrow(Orders)) {
   print(paste("Table: Orders - Error: duplicated order_id"))
   valid_ord = 0
@@ -272,6 +287,8 @@ for (i in 1:nrow(Payment))
 }
 
 #check primary key is unique
+Payment <- Payment[!duplicated(Payment$payment_id) & !duplicated(Payment$payment_id, fromLast = TRUE), ]
+
 if(length(unique(Payment$payment_id)) != nrow(Payment)) {
   print(paste("Table: Payment - Error: duplicated payment_id"))
   valid_pay = 0
@@ -324,6 +341,8 @@ for (i in 1:nrow(Product))
 }
 
 #check primary key is unique
+Product <- Product[!duplicated(Product$product_id) & !duplicated(Product$product_id, fromLast = TRUE), ]
+
 if(length(unique(Product$product_id)) != nrow(Product)) {
   print(paste("Table: Product - Error: duplicated product_id"))
   valid_prd = 0
@@ -367,6 +386,8 @@ for (i in 1:nrow(Promotion))
 }
 
 #check primary key is unique
+Promotion <- Promotion[!duplicated(Promotion$promotion_id) & !duplicated(Promotion$promotion_id, fromLast = TRUE), ]
+
 if(length(unique(Promotion$promotion_id)) != nrow(Promotion)) {
   print(paste("Table: Promotion - Error: duplicated promotion_id"))
   valid_prm = 0
@@ -467,6 +488,8 @@ for (i in 1:nrow(Settlement))
 }
 
 #check primary key is unique
+Settlement <- Settlement[!duplicated(Settlement$settlement_id) & !duplicated(Settlement$settlement_id, fromLast = TRUE), ]
+
 if(length(unique(Settlement$settlement_id)) != nrow(Settlement)) {
   print(paste("Table: Settlement - Error: duplicated settlement_id"))
   valid_set = 0
@@ -497,6 +520,12 @@ for (i in 1:nrow(Supplier))
     valid_sup = 0
   }
   
+  #check email format
+  if (isValidEmail(Supplier$seller_email[i]) == FALSE) {
+    print(paste("Table: Supplier - Error: seller_email format unsupported on row",i))
+    valid_sup = 0
+  }
+  
   #characters limit
   Supplier$seller_first_name[i] <- substring(Supplier$seller_first_name[i],1,50)
   Supplier$seller_last_name[i] <- substring(Supplier$seller_last_name[i],1,50)
@@ -505,11 +534,18 @@ for (i in 1:nrow(Supplier))
   Supplier$seller_city[i] <- substring(Supplier$seller_city[i],1,50)
   
   #rate convertion to numeric
-  Supplier$platform_rate[i] <- parse_number(Supplier$platform_rate[i])
+  if (is.character(Supplier$platform_rate) == TRUE) {
+    Supplier$platform_rate[i] <- parse_number(Supplier$platform_rate[i])
+  }
+  
+  if (is.character(Supplier$tax_rate) == TRUE) {
   Supplier$tax_rate[i] <- parse_number(Supplier$tax_rate[i])
+  }
 }
 
 #check primary key is unique
+Supplier <- Supplier[!duplicated(Supplier$supplier_id) & !duplicated(Supplier$supplier_id, fromLast = TRUE), ]
+
 if(length(unique(Supplier$supplier_id)) != nrow(Supplier)) {
   print(paste("Table: Supplier - Error: duplicated supplier_id"))
   valid_sup = 0
@@ -534,7 +570,7 @@ if (valid_sup == 1) {
 } else {print("Table: Supplier - Status: ERROR")}
 
 
-
+#INGESTION IF VALIDATION PASSED
 if (valid_cat == 1) {
   RSQLite::dbWriteTable(my_connection, "Category", Category, append = TRUE)}
 
@@ -561,4 +597,5 @@ if (valid_set == 1) {
 
 if (valid_sup == 1) {
   RSQLite::dbWriteTable(my_connection, "Supplier", Supplier, append = TRUE)}
+
 
