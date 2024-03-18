@@ -19,6 +19,7 @@ read_and_categorize_csv <- function(directory) {
     Supplier = NULL
   )
   
+  
   # Loop through each CSV file
   for (csv_file in csv_files) {
     # Read CSV file into a data frame
