@@ -29,52 +29,81 @@ read_and_categorize_csv <- function(directory) {
     
     # Determine which data frame to store the data
     if (grepl("Customer", file_name, ignore.case = TRUE)) {
-      data_frames$Customer <- rbind(data_frames$Customer, data)
-      # Output variable names
-      cat("Variables in Customer data frame:\n")
-      print(names(data_frames$Customer))
+      if (is.null(data_frames$Customer)) {
+        data_frames$Customer <- data
+      } else {
+        data_frames$Customer <- rbind(data_frames$Customer, data)
+      }
     } else if (grepl("Category", file_name, ignore.case = TRUE)) {
-      data_frames$Category <- rbind(data_frames$Category, data)
-      # Output variable names
-      cat("Variables in Category data frame:\n")
-      print(names(data_frames$Category))
+      if (is.null(data_frames$Category)) {
+        data_frames$Category <- data
+      } else {
+        data_frames$Category <- rbind(data_frames$Category, data)
+      }
     } else if (grepl("Order", file_name, ignore.case = TRUE)) {
-      data_frames$Orders <- rbind(data_frames$Orders, data)
-      # Output variable names
-      cat("Variables in Orders data frame:\n")
-      print(names(data_frames$Orders))
+      if (is.null(data_frames$Orders)) {
+        data_frames$Orders <- data
+      } else {
+        data_frames$Orders <- rbind(data_frames$Orders, data)
+      }
     } else if (grepl("Payment", file_name, ignore.case = TRUE)) {
-      data_frames$Payment <- rbind(data_frames$Payment, data)
-      # Output variable names
-      cat("Variables in Payment data frame:\n")
-      print(names(data_frames$Payment))
+      if (is.null(data_frames$Payment)) {
+        data_frames$Payment <- data
+      } else {
+        data_frames$Payment <- rbind(data_frames$Payment, data)
+      }
     } else if (grepl("Product", file_name, ignore.case = TRUE)) {
-      data_frames$Product <- rbind(data_frames$Product, data)
-      # Output variable names
-      cat("Variables in Product data frame:\n")
-      print(names(data_frames$Product))
+      if (is.null(data_frames$Product)) {
+        data_frames$Product <- data
+      } else {
+        data_frames$Product <- rbind(data_frames$Product, data)
+      }
     } else if (grepl("Promotion", file_name, ignore.case = TRUE)) {
-      data_frames$Promotion <- rbind(data_frames$Promotion, data)
-      # Output variable names
-      cat("Variables in Promotion data frame:\n")
-      print(names(data_frames$Promotion))
+      if (is.null(data_frames$Promotion)) {
+        data_frames$Promotion <- data
+      } else {
+        data_frames$Promotion <- rbind(data_frames$Promotion, data)
+      }
     } else if (grepl("Sale", file_name, ignore.case = TRUE)) {
-      data_frames$Sales <- rbind(data_frames$Sales, data)
-      # Output variable names
-      cat("Variables in Sales data frame:\n")
-      print(names(data_frames$Sales))
+      if (is.null(data_frames$Sales)) {
+        data_frames$Sales <- data
+      } else {
+        data_frames$Sales <- rbind(data_frames$Sales, data)
+      }
     } else if (grepl("Settlement", file_name, ignore.case = TRUE)) {
-      data_frames$Settlement <- rbind(data_frames$Settlement, data)
-      # Output variable names
-      cat("Variables in Settlement data frame:\n")
-      print(names(data_frames$Settlement))
+      if (is.null(data_frames$Settlement)) {
+        data_frames$Settlement <- data
+      } else {
+        data_frames$Settlement <- rbind(data_frames$Settlement, data)
+      }
     } else if (grepl("Supplier", file_name, ignore.case = TRUE)) {
-      data_frames$Supplier <- rbind(data_frames$Supplier, data)
-      # Output variable names
-      cat("Variables in Supplier data frame:\n")
-      print(names(data_frames$Supplier))
+      if (is.null(data_frames$Supplier)) {
+        data_frames$Supplier <- data
+      } else {
+        data_frames$Supplier <- rbind(data_frames$Supplier, data)
+      }
     }
   }
+  
+  # Output variable names
+  cat("Variables in Customer data frame:\n")
+  print(names(data_frames$Customer))
+  cat("Variables in Category data frame:\n")
+  print(names(data_frames$Category))
+  cat("Variables in Orders data frame:\n")
+  print(names(data_frames$Orders))
+  cat("Variables in Payment data frame:\n")
+  print(names(data_frames$Payment))
+  cat("Variables in Product data frame:\n")
+  print(names(data_frames$Product))
+  cat("Variables in Promotion data frame:\n")
+  print(names(data_frames$Promotion))
+  cat("Variables in Sales data frame:\n")
+  print(names(data_frames$Sales))
+  cat("Variables in Settlement data frame:\n")
+  print(names(data_frames$Settlement))
+  cat("Variables in Supplier data frame:\n")
+  print(names(data_frames$Supplier))
   
   # Return the list of data frames
   return(data_frames)
