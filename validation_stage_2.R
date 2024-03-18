@@ -219,6 +219,7 @@ ri_prm <- "
     (SELECT promotion_id FROM check_ref WHERE supplier_id IS NULL)
 "
 
+
 dbExecute(my_connection, ri_ord)
 dbExecute(my_connection, ri_pay)
 dbExecute(my_connection, ri_prd)
