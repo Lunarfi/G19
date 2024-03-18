@@ -41,6 +41,7 @@ jobs:
       - name: Data validation stage 2
         run: |
           Rscript validation_stage_2.R
+          
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
