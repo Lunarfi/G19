@@ -15,7 +15,6 @@ monthly_order <- "
   GROUP BY 1 
   ORDER BY 1 
 "
-
 monthly_finance <- "
   SELECT  
     STRFTIME('%m-%Y', date(order_date * 3600 * 24, 'unixepoch')) AS month_,
