@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Orders(
    order_id VARCHAR(6) PRIMARY KEY,
    product_id VARCHAR(6) NOT NULL,
    customer_id VARCHAR(6) NOT NULL,
-   order_date DATE,
+   order_date DATE NOT NULL,
    order_quantity INTEGER,
    order_status VARCHAR(20),
    order_approval_date DATE,
@@ -51,9 +51,9 @@ CREATE TABLE IF NOT EXISTS 'Customer'(
   'customer_id' VARCHAR(6) PRIMARY KEY,
   'customer_first_name' CHAR(50),
   'customer_last_name' CHAR(50) ,
-  'customer_email' VARCHAR(200) ,
+  'customer_email' VARCHAR(200) NOT NULL,
   'registration_date' DATE,
-  'customer_phone' INT(11),
+  'customer_phone' INT(11) NOT NULL,
   'customer_address' VARCHAR ,
   'customer_city' CHAR,
   'customer_postcode' VARCHAR
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS 'Customer'(
 Payment_schema <- "
 CREATE TABLE IF NOT EXISTS Payment (
    'payment_id' VARCHAR(6) PRIMARY KEY,
-   'order_id' VARCHAR(6),
+   'order_id' VARCHAR(6) NOT NULL,
    'payment_date' DATE,
    'payment_method' CHAR,
    FOREIGN KEY ('order_id') REFERENCES Orders('order_id')
@@ -76,11 +76,11 @@ CREATE TABLE IF NOT EXISTS 'Supplier'(
 'supplier_id' VARCHAR(6) PRIMARY KEY,
 'seller_first_name'  TEXT,
 'seller_last_name'  TEXT,
-'seller_email' VARCHAR(200),
+'seller_email' VARCHAR(200) NOT NULL,
 'seller_address' VARCHAR(200),
 'seller_city' CHAR(50) ,
 'seller_postcode' VARCHAR,
-'seller_phone' INT(11) ,
+'seller_phone' INT(11) NOT NULL,
 'registration_date' DATE ,
 'platform_rate' FLOAT,
 'tax_rate' FLOAT
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS 'Supplier'(
 Settlement_schema <- "
 CREATE TABLE IF NOT EXISTS Settlement (
    settlement_id VARCHAR(6) PRIMARY KEY,
-   sale_id VARCHAR(6),
+   sale_id VARCHAR(6) NOT NULL,
    settlement_date DATE,
    settlement_type TEXT,
    FOREIGN KEY ('sale_id') REFERENCES Sales('sale_id')
@@ -101,9 +101,9 @@ CREATE TABLE IF NOT EXISTS Settlement (
 Sales_schema <- "
 CREATE TABLE IF NOT EXISTS Sales (
     sale_id VARCHAR(6) PRIMARY KEY,
-    supplier_id VARCHAR(6),
-    product_id VARCHAR(6),
-    sale_date DATE,
+    supplier_id VARCHAR(6) NOT NULL,
+    product_id VARCHAR(6) NOT NULL,
+    sale_date DATE NOT NULL,
     FOREIGN KEY ('product_id') REFERENCES Product('product_id'),
     FOREIGN KEY ('supplier_id') REFERENCES Supplier('supplier_id')
 );"
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS Category (
 Promotion_schema <- "
 CREATE TABLE IF NOT EXISTS 'Promotion'(
   'promotion_id' VARCHAR(6) PRIMARY KEY,
-  'supplier_id' VARCHAR(6),
+  'supplier_id' VARCHAR(6) NOT NULL,
   'promotion_name' CHAR,
   'promotion_fees' FLOAT ,
   'promotion_start_date' DATE,
