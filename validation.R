@@ -150,6 +150,11 @@ if (valid_cat == 1) {
 
 
 #CUSTOMER
+#fix data type
+Customer$customer_phone <- as.numeric(Customer$customer_phone)
+Customer$registration_date <- mdy(Customer$registration_date)
+
+#start loop
 for (i in 1:nrow(Customer))
 {
   #check primary key exists
@@ -189,10 +194,11 @@ if(length(unique(Customer$customer_email)) != nrow(Customer)) {
   valid_cus = 0
 }
 
-#fix data type
-Customer$customer_phone <- as.numeric(Customer$customer_phone)
-Customer$registration_date <- mdy(Customer$registration_date)
-
+#check phone number is unique
+if(length(unique(Customer$customer_phone)) != nrow(Customer)) {
+  print(paste("Table: Customer - Error: duplicated customer_phone"))
+  valid_cus = 0
+}
 
 #final check result
 if (valid_cus == 1) {
@@ -653,6 +659,12 @@ for (i in 1:nrow(Supplier))
   }
 }
 
+#fix data type
+Supplier$seller_phone <- as.numeric(Supplier$seller_phone)
+Supplier$registration_date <- mdy(Supplier$registration_date)
+Supplier$platform_rate <- as.numeric(Supplier$platform_rate)
+Supplier$tax_rate <- as.numeric(Supplier$tax_rate)
+
 #check primary key is unique
 Supplier <- Supplier[!duplicated(Supplier$supplier_id) & !duplicated(Supplier$supplier_id, fromLast = TRUE), ]
 
@@ -667,11 +679,11 @@ if(length(unique(Supplier$seller_email)) != nrow(Supplier)) {
   valid_sup = 0
 }
 
-#fix data type
-Supplier$seller_phone <- as.numeric(Supplier$seller_phone)
-Supplier$registration_date <- mdy(Supplier$registration_date)
-Supplier$platform_rate <- as.numeric(Supplier$platform_rate)
-Supplier$tax_rate <- as.numeric(Supplier$tax_rate)
+#check phone number is unique
+if(length(unique(Supplier$seller_phone)) != nrow(Supplier)) {
+  print(paste("Table: Supplier - Error: duplicated seller_phone"))
+  valid_sup = 0
+}
 
 #check platform rate and tax rate value
 for (i in 1:nrow(Supplier))
@@ -721,5 +733,3 @@ if (valid_set == 1) {
 
 if (valid_sup == 1) {
   RSQLite::dbWriteTable(my_connection, "Supplier", Supplier, append = TRUE)}
-
-
