@@ -1,8 +1,5 @@
-install.packages("curl")
-library(curl)
-install.packages("tidyverse", type="source")
-install.packages("writexl")
-
+library(openxlsx)
+library(writexl)
 library(readr)
 library(dplyr)
 library(tidyverse)
