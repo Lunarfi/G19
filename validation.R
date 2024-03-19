@@ -8,7 +8,7 @@ read_and_categorize_csv <- function(directory) {
   
   # Initialize a list to store data frames
   data_frames <- list(
-    Category = NULL,
+    Category = data.frame(), # Initialize Category data frame
     Customer = NULL,
     Orders = NULL,
     Payment = NULL,
@@ -19,7 +19,6 @@ read_and_categorize_csv <- function(directory) {
     Supplier = NULL
   )
   
-  
   # Loop through each CSV file
   for (csv_file in csv_files) {
     # Read CSV file into a data frame
@@ -29,20 +28,20 @@ read_and_categorize_csv <- function(directory) {
     file_name <- tools::file_path_sans_ext(basename(csv_file))
     
     # Determine which data frame to store the data
-    if (grepl("Customer", file_name, ignore.case = TRUE)) {
-      data_frames$Customer <- rbind(data_frames$Customer, data)
-      # Output variable names
-      cat("Variables in Customer data frame:\n")
-      print(names(data_frames$Customer))
-    } else if (grepl("Category", file_name, ignore.case = TRUE)) {
+    if (grepl("Category", file_name, ignore.case = TRUE)) {
       data_frames$Category <- rbind(data_frames$Category, data)
       # Output variable names
       cat("Variables in Category data frame:\n")
       print(names(data_frames$Category))
+    } else if (grepl("Customer", file_name, ignore.case = TRUE)) {
+      data_frames$Customer <- rbind(data_frames$Customer, data)
+      # Output variable names
+      cat("Variables in Customer data frame:\n")
+      print(names(data_frames$Customer))
     } else if (grepl("Order", file_name, ignore.case = TRUE)) {
       data_frames$Orders <- rbind(data_frames$Orders, data)
       # Output variable names
-      cat("Variables in Orders data frame:\n")
+      cat("Variables in Order data frame:\n")
       print(names(data_frames$Orders))
     } else if (grepl("Payment", file_name, ignore.case = TRUE)) {
       data_frames$Payment <- rbind(data_frames$Payment, data)
@@ -62,7 +61,7 @@ read_and_categorize_csv <- function(directory) {
     } else if (grepl("Sale", file_name, ignore.case = TRUE)) {
       data_frames$Sales <- rbind(data_frames$Sales, data)
       # Output variable names
-      cat("Variables in Sales data frame:\n")
+      cat("Variables in Sale data frame:\n")
       print(names(data_frames$Sales))
     } else if (grepl("Settlement", file_name, ignore.case = TRUE)) {
       data_frames$Settlement <- rbind(data_frames$Settlement, data)
@@ -84,8 +83,14 @@ read_and_categorize_csv <- function(directory) {
 # Directory containing CSV files
 directory <- "Data_upload"
 
-# Read CSV files from the directory and categorize them into data frames
+# Read CSV files from the directory and categorize em into data frames
 data_frames <- read_and_categorize_csv(directory)
+
+
+
+
+
+
 
 # Access each data frame by its name
 Category <- data_frames$Category
@@ -97,7 +102,6 @@ Promotion <- data_frames$Promotion
 Sales <- data_frames$Sales
 Settlement <- data_frames$Settlement
 Supplier <- data_frames$Supplier
-
 
 library(RSQLite)
 library(readr)
