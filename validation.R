@@ -10,11 +10,11 @@ read_and_categorize_csv <- function(directory) {
   data_frames <- list(
     Category = data.frame(), # Initialize Category data frame
     Customer = NULL,
-    Order = NULL,
+    Orders = NULL,
     Payment = NULL,
     Product = NULL,
     Promotion = NULL,
-    Sale = NULL,
+    Sales = NULL,
     Settlement = NULL,
     Supplier = NULL
   )
