@@ -699,7 +699,6 @@ for (i in 1:nrow(Supplier))
     print(paste("Table: Supplier - Error: tax_rate is not equal to 10 on row",i))
     valid_sup = 0
   }
-  
 }
 
 #final check result
