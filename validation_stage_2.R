@@ -2,7 +2,6 @@ library(RSQLite)
 library(readr)
 
 my_connection <- RSQLite::dbConnect(RSQLite::SQLite(),"mydatabase.db")
-
 #check primary key duplication
 dup_cat <- "
   WITH
