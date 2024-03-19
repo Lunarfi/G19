@@ -1,4 +1,4 @@
-install.packages("tidyverse")
+install.packages("tidyverse", type="source")
 install.packages("writexl")
 
 library(readr)
