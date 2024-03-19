@@ -449,8 +449,6 @@ for (i in 1:nrow(Promotion))
   }
 }
 
-Promotion$promotion_end_date[1] < Promotion$promotion_start_date[1]
-
 #check primary key is unique
 Promotion <- Promotion[!duplicated(Promotion$promotion_id) & !duplicated(Promotion$promotion_id, fromLast = TRUE), ]
 
