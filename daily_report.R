@@ -113,6 +113,7 @@ ORDER BY 4 DESC
 LIMIT 10
 "
 
+#show result
 print("Daily Order")
 dbGetQuery(my_connection,daily_order)
 print("Daily Finance")
