@@ -1,6 +1,5 @@
 # Load necessary libraries
 library(readr)
-
 # Function to read CSV files from a directory and categorize them into different data frames
 read_and_categorize_csv <- function(directory) {
   # Get list of CSV files in the directory
