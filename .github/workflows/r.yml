@@ -2,7 +2,7 @@ name: workflow
 
 on:
   schedule:
-    - cron: '0 */24 * * *' # Run every 3 hours
+    - cron: '0 */24 * * *' # Run every 24 hours
   push:
     branches: [ main ]
     paths:
