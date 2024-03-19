@@ -245,6 +245,18 @@ for (i in 1:nrow(Orders))
     valid_ord = 0
   }
   
+  #check if order quantity is above 20
+  if (Orders$order_quantity[i] < 0 || Orders$order_quantity[i] > 20) { 
+    print(paste("Table: Orders - Error: order_quantity is more than 20 on row",i))
+    valid_ord = 0
+  }
+  
+  #check if order status is valid
+  if (!(Orders$order_status[i]%in%c("processing","delivered","pending","shipped"))) { 
+    print(paste("Table: Orders - Error: order_status is not valid on row",i))
+    valid_ord = 0
+  }
+  
   #check if status is pending then approval date is null
   if (Orders$order_status[i] == "pending" && is.na(Orders$order_approval_date[i]) == FALSE) {
     print(paste("Table: Orders - Error: order_approval_date is not null when status is pending on row",i))
@@ -311,6 +323,10 @@ if (valid_ord == 1) {
 
 
 #PAYMENT
+#fix data type
+Payment$Payment_date <- mdy(Payment$Payment_date)
+
+#start loop
 for (i in 1:nrow(Payment))
 {
   #check primary key exists
@@ -335,6 +351,12 @@ for (i in 1:nrow(Payment))
     print(paste("Table: Payment - Error: order_id more than 6 characters on row",i))
     valid_pay = 0
   }
+  
+  #check if payment method is valid
+  if (!(Payment$Payment_method[i]%in%c("venmo","credit_card","debit_card","paypal","apple_pay"))) { 
+    print(paste("Table: Payment - Error: payment_method is not valid on row",i))
+    valid_pay = 0
+  }
 }
 
 #check primary key is unique
@@ -345,9 +367,6 @@ if(length(unique(Payment$payment_id)) != nrow(Payment)) {
   valid_pay = 0
 }
 
-#fix data type
-Payment$Payment_date <- mdy(Payment$Payment_date)
-
 #final check result
 if (valid_pay == 1) {
   print("Table: Payment - Status: OK")
@@ -355,6 +374,11 @@ if (valid_pay == 1) {
 
 
 #PRODUCT
+#fix data type
+Product$price <- as.numeric(Product$price)
+Product$discount_rate <- as.numeric(Product$discount_rate)
+
+#start loop
 for (i in 1:nrow(Product))
 {
   #check primary key exists
@@ -389,6 +413,18 @@ for (i in 1:nrow(Product))
     print(paste("Table: Product - Error: suplier_id more than 6 characters on row",i))
     valid_prd = 0
   }
+  
+  #check if discount is more than 20%
+  if (Product$discount_rate[i] < 0 | Product$discount_rate[i] > 20) { 
+    print(paste("Table: Product - Error: discount rate is not between 0-20 on row",i))
+    valid_prd = 0
+  }
+  
+  #check if price is between 5-100
+  if (Product$price[i] < 5 || Product$price[i] > 100) { 
+    print(paste("Table: Product - Error: price is not between 5-100 on row",i))
+    valid_prd = 0
+  }
 }
 
 #check primary key is unique
@@ -398,10 +434,6 @@ if(length(unique(Product$product_id)) != nrow(Product)) {
   print(paste("Table: Product - Error: duplicated product_id"))
   valid_prd = 0
 }
-
-#fix data type
-Product$price <- as.numeric(Product$price)
-Product$discount_rate <- as.numeric(Product$discount_rate)
 
 #final check result
 if (valid_prd == 1) {
@@ -445,6 +477,18 @@ for (i in 1:nrow(Promotion))
   #check end date is after start date
   if (Promotion$promotion_end_date[i] < Promotion$promotion_start_date[i]) {
     print(paste("Table: Promotion - Error: promotion end date is before start date on row",i))
+    valid_prm = 0
+  }
+  
+  #check if length of promotion is within 30 days
+  if (as.numeric(Promotion$promotion_end_date[i] - Promotion$promotion_start_date[i]) > 30) {
+    print(paste("Table: Promotion - Error: promotion length is more than 30 days on row",i))
+    valid_prm = 0
+  }
+  
+  #check if promotion fee is more than 1000
+  if (Promotion$promotion_fees[i] > 1000) {
+    print(paste("Table: Promotion - Error: promotion fee is more than 1000 on row",i))
     valid_prm = 0
   }
 }
@@ -520,6 +564,9 @@ if (valid_sal == 1) {
 
 
 #SETTLEMENT
+#fix data type
+Settlement$settlement_date <- mdy(Settlement$settlement_date)
+
 for (i in 1:nrow(Settlement))
 {
   #check primary key exists
@@ -544,6 +591,12 @@ for (i in 1:nrow(Settlement))
     print(paste("Table: Settlement - Error: sale_id more than 6 characters on row",i))
     valid_set = 0
   }
+  
+  #check if settlement method is valid
+  if (!(Settlement$settlement_type[i]%in%c("bank transfer","card","cheque","bank draft","cash"))) { 
+    print(paste("Table: Settlement - Error: settlement_type is not valid on row",i))
+    valid_set = 0
+  }
 }
 
 #check primary key is unique
@@ -554,9 +607,6 @@ if(length(unique(Settlement$settlement_id)) != nrow(Settlement)) {
   valid_set = 0
 }
 
-#fix data type
-Settlement$settlement_date <- mdy(Settlement$settlement_date)
-
 #final check result
 if (valid_set == 1) {
   print("Table: Settlement - Status: OK")
@@ -565,6 +615,7 @@ if (valid_set == 1) {
 
 
 #SUPPLIER
+#start loop
 for (i in 1:nrow(Supplier))
 {
   #check primary key exists
@@ -622,6 +673,20 @@ Supplier$registration_date <- mdy(Supplier$registration_date)
 Supplier$platform_rate <- as.numeric(Supplier$platform_rate)
 Supplier$tax_rate <- as.numeric(Supplier$tax_rate)
 
+#check platform rate and tax rate value
+for (i in 1:nrow(Supplier))
+{
+  if (Supplier$platform_rate[i] < 0 || Supplier$platform_rate[i] > 25) {
+    print(paste("Table: Supplier - Error: platform_rate is not between 0-25 on row",i))
+    valid_sup = 0
+  }
+  
+  if (Supplier$tax_rate[i] != 10) {
+    print(paste("Table: Supplier - Error: tax_rate is not equal to 10 on row",i))
+    valid_sup = 0
+  }
+  
+}
 
 #final check result
 if (valid_sup == 1) {
