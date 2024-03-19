@@ -44,7 +44,9 @@ jobs:
       - name: Generate Daily Updated Report
         run: |
           Rscript daily_report.R
-          
+      - name: Data Analysis Update
+        run: |
+          Rscript Data_Analysis.R
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
