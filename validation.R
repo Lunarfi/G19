@@ -19,7 +19,6 @@ read_and_categorize_csv <- function(directory) {
     Supplier = NULL
   )
   
-  
   # Loop through each CSV file
   for (csv_file in csv_files) {
     # Read CSV file into a data frame
@@ -30,81 +29,52 @@ read_and_categorize_csv <- function(directory) {
     
     # Determine which data frame to store the data
     if (grepl("Customer", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Customer)) {
-        data_frames$Customer <- data
-      } else {
-        data_frames$Customer <- rbind(data_frames$Customer, data)
-      }
+      data_frames$Customer <- rbind(data_frames$Customer, data)
+      # Output variable names
+      cat("Variables in Customer data frame:\n")
+      print(names(data_frames$Customer))
     } else if (grepl("Category", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Category)) {
-        data_frames$Category <- data
-      } else {
-        data_frames$Category <- rbind(data_frames$Category, data)
-      }
+      data_frames$Category <- rbind(data_frames$Category, data)
+      # Output variable names
+      cat("Variables in Category data frame:\n")
+      print(names(data_frames$Category))
     } else if (grepl("Order", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Orders)) {
-        data_frames$Orders <- data
-      } else {
-        data_frames$Orders <- rbind(data_frames$Orders, data)
-      }
+      data_frames$Orders <- rbind(data_frames$Orders, data)
+      # Output variable names
+      cat("Variables in Orders data frame:\n")
+      print(names(data_frames$Orders))
     } else if (grepl("Payment", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Payment)) {
-        data_frames$Payment <- data
-      } else {
-        data_frames$Payment <- rbind(data_frames$Payment, data)
-      }
+      data_frames$Payment <- rbind(data_frames$Payment, data)
+      # Output variable names
+      cat("Variables in Payment data frame:\n")
+      print(names(data_frames$Payment))
     } else if (grepl("Product", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Product)) {
-        data_frames$Product <- data
-      } else {
-        data_frames$Product <- rbind(data_frames$Product, data)
-      }
+      data_frames$Product <- rbind(data_frames$Product, data)
+      # Output variable names
+      cat("Variables in Product data frame:\n")
+      print(names(data_frames$Product))
     } else if (grepl("Promotion", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Promotion)) {
-        data_frames$Promotion <- data
-      } else {
-        data_frames$Promotion <- rbind(data_frames$Promotion, data)
-      }
+      data_frames$Promotion <- rbind(data_frames$Promotion, data)
+      # Output variable names
+      cat("Variables in Promotion data frame:\n")
+      print(names(data_frames$Promotion))
     } else if (grepl("Sale", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Sales)) {
-        data_frames$Sales <- data
-      } else {
-        data_frames$Sales <- rbind(data_frames$Sales, data)
-      }
+      data_frames$Sales <- rbind(data_frames$Sales, data)
+      # Output variable names
+      cat("Variables in Sales data frame:\n")
+      print(names(data_frames$Sales))
     } else if (grepl("Settlement", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Settlement)) {
-        data_frames$Settlement <- data
-      } else {
-        data_frames$Settlement <- rbind(data_frames$Settlement, data)
-      }
+      data_frames$Settlement <- rbind(data_frames$Settlement, data)
+      # Output variable names
+      cat("Variables in Settlement data frame:\n")
+      print(names(data_frames$Settlement))
     } else if (grepl("Supplier", file_name, ignore.case = TRUE)) {
-      if (is.null(data_frames$Supplier)) {
-        data_frames$Supplier <- data
-      } else {
-        data_frames$Supplier <- rbind(data_frames$Supplier, data)
-      }
+      data_frames$Supplier <- rbind(data_frames$Supplier, data)
+      # Output variable names
+      cat("Variables in Supplier data frame:\n")
+      print(names(data_frames$Supplier))
     }
   }
-  
-  # Output variable names
-  cat("Variables in Customer data frame:\n")
-  print(names(data_frames$Customer))
-  cat("Variables in Category data frame:\n")
-  print(names(data_frames$Category))
-  cat("Variables in Orders data frame:\n")
-  print(names(data_frames$Orders))
-  cat("Variables in Payment data frame:\n")
-  print(names(data_frames$Payment))
-  cat("Variables in Product data frame:\n")
-  print(names(data_frames$Product))
-  cat("Variables in Promotion data frame:\n")
-  print(names(data_frames$Promotion))
-  cat("Variables in Sales data frame:\n")
-  print(names(data_frames$Sales))
-  cat("Variables in Settlement data frame:\n")
-  print(names(data_frames$Settlement))
-  cat("Variables in Supplier data frame:\n")
-  print(names(data_frames$Supplier))
   
   # Return the list of data frames
   return(data_frames)
@@ -229,7 +199,17 @@ if (valid_cus == 1) {
   print("Table: Customer - Status: OK")
 } else {print("Table: Customer - Status: ERROR")}
 
+
 #ORDER
+#fix data type
+Orders$order_quantity <- as.numeric(Orders$order_quantity)
+Orders$rating_score <- as.numeric(Orders$rating_score)
+Orders$order_date <- mdy(Orders$order_date)
+Orders$order_approval_date <- mdy(Orders$order_approval_date)
+Orders$order_delivery_date <- mdy(Orders$order_delivery_date)
+Orders$rating_date <- mdy(Orders$rating_date)
+
+#start loop
 for (i in 1:nrow(Orders))
 {
   #check primary key exists
@@ -264,6 +244,55 @@ for (i in 1:nrow(Orders))
     print(paste("Table: Orders - Error: customer_id more than 6 characters on row",i))
     valid_ord = 0
   }
+  
+  #check if status is pending then approval date is null
+  if (Orders$order_status[i] == "pending" && is.na(Orders$order_approval_date[i]) == FALSE) {
+    print(paste("Table: Orders - Error: order_approval_date is not null when status is pending on row",i))
+    valid_ord = 0
+  }
+  
+  #check if approval date is after order date
+  if (Orders$order_approval_date[i] < Orders$order_date[i] && is.na(Orders$order_approval_date[i]) == FALSE) {
+    print(paste("Table: Orders - Error: order_approval_date is before order_date on row",i))
+    valid_ord = 0
+  }
+  
+  #check if status is delivered then delivery date is not null
+  if (Orders$order_status[i] == "delivered" && is.na(Orders$order_delivery_date[i]) == TRUE) {
+    print(paste("Table: Orders - Error: order_delivery_date is null when status is delivered on row",i))
+    valid_ord = 0
+    is.na(Orders$order_delivery_date[2])
+  }
+  
+  #check if delivery date is after approval date
+  if (Orders$order_delivery_date[i] < Orders$order_approval_date[i] && is.na(Orders$order_delivery_date[i]) == FALSE) {
+    print(paste("Table: Orders - Error: order_delivery_date is before order_approval_date on row",i))
+    valid_ord = 0
+  }
+  
+  #check if rating date is not null then status is delivered
+  if (Orders$order_status[i] != "delivered" && is.na(Orders$rating_date[i]) == FALSE) {
+    print(paste("Table: Orders - Error: rating_date is not null when status is not delivered yet on row",i))
+    valid_ord = 0
+  }
+  
+  #check if rating score is between 1-5
+  if ((is.na(Orders$rating_score[i]) == FALSE) && (Orders$rating_score[i] < 0 || Orders$rating_score[i] > 5)) {
+    print(paste("Table: Orders - Error: rating_score is not between 1-5 on row",i))
+    valid_ord = 0
+  }
+  
+  #check if rating score is not null then rating date is not null
+  if (is.na(Orders$rating_score[i]) == FALSE && is.na(Orders$rating_date[i]) == TRUE) {
+    print(paste("Table: Orders - Error: rating_date is null when rating_score has value on row",i))
+    valid_ord = 0
+  }
+  
+  #check if rating comment is not null then rating score is not null
+  if (nchar(Orders$rating_comment[i]) >= 1  && is.na(Orders$rating_score[i]) == TRUE) {
+    print(paste("Table: Orders - Error: rating_score is null when rating_comment has value on row",i))
+    valid_ord = 0
+  }
 }
 
 #check primary key is unique
@@ -273,14 +302,6 @@ if(length(unique(Orders$order_id)) != nrow(Orders)) {
   print(paste("Table: Orders - Error: duplicated order_id"))
   valid_ord = 0
 }
-
-#fix data type
-Orders$order_quantity <- as.numeric(Orders$order_quantity)
-Orders$rating_score <- as.numeric(Orders$rating_score)
-Orders$order_date <- mdy(Orders$order_date)
-Orders$order_approval_date <- mdy(Orders$order_approval_date)
-Orders$order_delivery_date <- mdy(Orders$order_delivery_date)
-Orders$rating_date <- mdy(Orders$rating_date)
 
 
 #final check result
@@ -389,6 +410,13 @@ if (valid_prd == 1) {
 
 
 #PROMOTION
+
+#fix data type
+Promotion$promotion_fees <- as.numeric(Promotion$promotion_fees)
+Promotion$promotion_start_date <- mdy(Promotion$promotion_start_date)
+Promotion$promotion_end_date <- mdy(Promotion$promotion_end_date)
+
+#start loop
 for (i in 1:nrow(Promotion))
 {
   #check primary key exists
@@ -413,7 +441,15 @@ for (i in 1:nrow(Promotion))
     print(paste("Table: Promotion - Error: supplier_id more than 6 characters on row",i))
     valid_prm = 0
   }
+  
+  #check end date is after start date
+  if (Promotion$promotion_end_date[i] < Promotion$promotion_start_date[i]) {
+    print(paste("Table: Promotion - Error: promotion end date is before start date on row",i))
+    valid_prm = 0
+  }
 }
+
+Promotion$promotion_end_date[1] < Promotion$promotion_start_date[1]
 
 #check primary key is unique
 Promotion <- Promotion[!duplicated(Promotion$promotion_id) & !duplicated(Promotion$promotion_id, fromLast = TRUE), ]
@@ -422,11 +458,6 @@ if(length(unique(Promotion$promotion_id)) != nrow(Promotion)) {
   print(paste("Table: Promotion - Error: duplicated promotion_id"))
   valid_prm = 0
 }
-
-#fix data type
-Promotion$promotion_fees <- as.numeric(Promotion$promotion_fees)
-Promotion$promotion_start_date <- mdy(Promotion$promotion_start_date)
-Promotion$promotion_end_date <- mdy(Promotion$promotion_end_date)
 
 #final check result
 if (valid_prm == 1) {
