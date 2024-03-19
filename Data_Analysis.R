@@ -1,3 +1,5 @@
+install.packages("curl")
+library(curl)
 install.packages("tidyverse", type="source")
 install.packages("writexl")
 
