@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS 'Customer'(
   'customer_last_name' CHAR(50) ,
   'customer_email' VARCHAR(200) NOT NULL,
   'registration_date' DATE,
-  'customer_phone' INT(11) NOT NULL,
+  'customer_phone' INT(11) NOT NULL UNIQUE,
   'customer_address' VARCHAR ,
   'customer_city' CHAR,
   'customer_postcode' VARCHAR
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS 'Supplier'(
 'seller_address' VARCHAR(200),
 'seller_city' CHAR(50) ,
 'seller_postcode' VARCHAR,
-'seller_phone' INT(11) NOT NULL,
+'seller_phone' INT(11) NOT NULL UNIQUE,
 'registration_date' DATE ,
 'platform_rate' FLOAT,
 'tax_rate' FLOAT
