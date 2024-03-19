@@ -219,10 +219,134 @@ ri_prm <- "
     (SELECT promotion_id FROM check_ref WHERE supplier_id IS NULL)
 "
 
-
 dbExecute(my_connection, ri_ord)
 dbExecute(my_connection, ri_pay)
 dbExecute(my_connection, ri_prd)
 dbExecute(my_connection, ri_sal)
 dbExecute(my_connection, ri_set)
 dbExecute(my_connection, ri_prm)
+
+#check date constraint between 2 tables
+
+#check and fix customer registration date is before first order date
+dc_cus <- "
+  WITH 
+  check_order AS (
+  SELECT 
+    c.customer_id,
+    MIN(o.order_date) as first_order_date
+  FROM Customer c 
+  LEFT JOIN Orders o on c.customer_id = o.customer_id 
+  WHERE o.order_date < c.registration_date
+  GROUP BY 1
+  ORDER BY 1 
+  )
+  
+  UPDATE Customer 
+  SET registration_date = (SELECT first_order_date FROM check_order)
+  WHERE customer_id = (SELECT customer_id FROM check_order)
+"
+
+#check and fix supplier registration date is before first order date
+dc_sup <- "
+  WITH 
+  check_order AS (
+  SELECT 
+    s.supplier_id,
+    min(o.order_date) as first_order_date
+  FROM Orders o 
+  LEFT JOIN Product p on o.product_id = p.product_id
+  LEFT JOIN Supplier s on p.supplier_id = s.supplier_id
+  WHERE o.order_date < s.registration_date
+  GROUP BY 1 
+  ORDER BY 1 
+  )
+  
+  UPDATE Supplier
+  SET registration_date = (SELECT first_order_date FROM check_order)
+  WHERE supplier_id = (SELECT supplier_id FROM check_order)
+"
+
+#check sale date is equal to order date
+dc_sal <- "
+  WITH 
+  check_sal AS (
+  SELECT DISTINCT
+    s.sale_id,
+    o.order_id
+  FROM Sales s
+  LEFT JOIN Orders o on s.product_id = o.product_id AND s.sale_date = o.order_date
+  WHERE o.order_id IS NULL
+  )
+  
+  DELETE FROM Sales
+  WHERE sale_id in 
+    (SELECT sale_id FROM check_sal) --Delete invalid sales that cannot be mapped to the order
+"
+
+#check payment date is after order date
+dc_pay <- "
+  WITH 
+  check_pay AS (
+  SELECT 
+    p.payment_id,
+    MAX(o.order_date) as last_order_date
+  FROM Payment p 
+  LEFT JOIN Orders o on p.order_id = o.order_id
+  WHERE p.payment_date < o.order_date
+  GROUP BY 1
+  ORDER BY 1 
+  )
+  
+  UPDATE Payment
+  SET payment_date = (SELECT last_order_date FROM check_pay)
+  WHERE payment_id = (SELECT payment_id FROM check_pay)
+"
+
+#check settlement date is after sale date
+dc_set <- "
+  WITH 
+  check_set AS (
+  SELECT 
+    p.settlement_id,
+    MAX(s.sale_date) as last_sale_date
+  FROM Settlement p 
+  LEFT JOIN Sales s on p.sale_id = s.sale_id
+  WHERE p.settlement_date < s.sale_date
+  GROUP BY 1
+  ORDER BY 1 
+  )
+  
+  UPDATE Settlement
+  SET settlement_date = (SELECT last_sale_date FROM check_set)
+  WHERE settlement_id = (SELECT settlement_id FROM check_set)
+"
+
+#check supplier registration date is before first promotion date
+dc_prm <- "
+  WITH 
+  check_prm AS 
+  (
+  SELECT 
+    s.supplier_id,
+    min(p.promotion_start_date) AS first_promo_date
+  FROM Supplier s
+  LEFT JOIN Promotion p on s.supplier_id = p.supplier_id
+  WHERE p.promotion_start_date < s.registration_date
+  GROUP BY 1 
+  ORDER BY 1 
+  )
+  
+  UPDATE Supplier
+  SET registration_date = (SELECT first_promo_date FROM check_prm)
+  WHERE supplier_id = (SELECT supplier_id FROM check_prm)
+"
+
+dbExecute(my_connection, dc_cus)
+dbExecute(my_connection, dc_sup)
+dbExecute(my_connection, dc_pay)
+dbExecute(my_connection, dc_sal)
+dbExecute(my_connection, dc_set)
+dbExecute(my_connection, dc_prm)
+
+
