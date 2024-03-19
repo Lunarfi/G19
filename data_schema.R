@@ -10,7 +10,6 @@ if (file.exists(db_file)) {
   unlink(db_file)
 }
 
-
 data <- dbConnect(SQLite(), "mydatabase.db")
 
 # Define the schema for the order table
