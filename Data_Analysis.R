@@ -1,3 +1,6 @@
+install.packages("tidyverse")
+install.packages("writexl")
+
 library(readr)
 library(dplyr)
 library(tidyverse)
