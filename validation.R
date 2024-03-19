@@ -42,7 +42,7 @@ read_and_categorize_csv <- function(directory) {
       data_frames$Orders <- rbind(data_frames$Orders, data)
       # Output variable names
       cat("Variables in Order data frame:\n")
-      print(names(data_frames$Order))
+      print(names(data_frames$Orders))
     } else if (grepl("Payment", file_name, ignore.case = TRUE)) {
       data_frames$Payment <- rbind(data_frames$Payment, data)
       # Output variable names
@@ -62,7 +62,7 @@ read_and_categorize_csv <- function(directory) {
       data_frames$Sales <- rbind(data_frames$Sales, data)
       # Output variable names
       cat("Variables in Sale data frame:\n")
-      print(names(data_frames$Sale))
+      print(names(data_frames$Sales))
     } else if (grepl("Settlement", file_name, ignore.case = TRUE)) {
       data_frames$Settlement <- rbind(data_frames$Settlement, data)
       # Output variable names
