@@ -14,7 +14,6 @@ dup_cat <- "
   WHERE category_id in 
     (SELECT category_id FROM check_dup WHERE id_rnk > 1)
 "
-
 dup_cus <- "
   WITH
   check_dup AS (
