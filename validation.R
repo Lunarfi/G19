@@ -5,7 +5,6 @@ library(readr)
 read_and_categorize_csv <- function(directory) {
   # Get list of CSV files in the directory
   csv_files <- list.files(directory, pattern = "\\.csv$", full.names = TRUE)
-  
   # Initialize a list to store data frames
   data_frames <- list(
     Category = data.frame(), # Initialize Category data frame
@@ -702,7 +701,6 @@ for (i in 1:nrow(Supplier))
     print(paste("Table: Supplier - Error: tax_rate is not equal to 10 on row",i))
     valid_sup = 0
   }
-  
 }
 
 #final check result
@@ -738,3 +736,5 @@ if (valid_set == 1) {
 
 if (valid_sup == 1) {
   RSQLite::dbWriteTable(my_connection, "Supplier", Supplier, append = TRUE)}
+
+

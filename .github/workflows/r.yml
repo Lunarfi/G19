@@ -1,8 +1,8 @@
 name: workflow 
 
 on:
-#  schedule:
-#    - cron: '0 */3 * * *' # Run every 3 hours
+  schedule:
+    - cron: '0 0 * * *' # Run every 24 hours
   push:
     branches: [ main ]
     paths:
@@ -28,7 +28,10 @@ jobs:
       - name: Install packages
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          Rscript -e 'install.packages(c("ggplot2","dplyr", "readr", "RSQLite", "lubridate"))'
+          Rscript -e 'install.packages(c("ggplot2","dplyr", "readr", "RSQLite", "lubridate", "DBI", "writexl","openxlsx","writexl"))'
+      - name: Delete database file
+        run: |
+          rm -f mydatabase.db
       - name: Create sql schema
         run: |
           Rscript data_schema.R
@@ -41,7 +44,9 @@ jobs:
       - name: Generate Daily Updated Report
         run: |
           Rscript daily_report.R
-          
+      - name: Data Analysis Update
+        run: |
+          Rscript Data_Analysis.R
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:

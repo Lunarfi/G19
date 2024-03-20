@@ -1,0 +1,298 @@
+---
+title: "part 1"
+format: pdf
+editor: visual
+---
+
+```{r}
+#| label: load-packages
+#| include: false
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+# Part 1 Database Design and Implementation
+
+We have created a database design for a e-commerce company and implemented it by creating physical schema.
+
+## 1.1 E-R Diagram Design
+
+### Logical Schema
+
+Based on our understanding and usage of different e-commerce, we created a logical schema(LS) on excel first regarding entities we want to include and there relevant attributes.
+
+After many iteration, we created LS for the following entities (Refer file Database logical schema design) :
+
+1.  Customer entity - Customer will purchase and rate the product
+2.  Supplier entity - Supplier will sell and promote the product
+3.  Category - There can be several category and some categories can be sub categories of one another.
+4.  Product - Product listed by a supplier and belongs to a category
+5.  Order - customer will order a product
+6.  Sale - supplier will make a sale of a product
+7.  payment - customer pays for the order
+8.  settlement - supplier receives settlement for the sale
+9.  Promotion - supplier promotes for better reach to all customers
+
+The below snip is of tab Updated table list based on which we updated our ER diagram and physical schema in next steps.
+
+![](images/clipboard-3585127072.png)
+
+### E-R Diagram
+
+We made our E-R diagram based on logical schema and for every iteration revised the ER. Below are the snips of final E-R diagram.
+
+-   Customer order Product - There is a many-to-many relationship between customer and product. As customer can order many products and a product can be ordered by many customers. Customer (customer_id) orders a product (product_id), hence a order_id is a primary key with customer_id and product_id is foreign key in order table to differentiate all orders.
+
+    ![](images/clipboard-1270967835.png)
+
+Below are the assumption and relationship set for customer orders product:
+
+1.  1 customer can buy many products and 1 product can be bought by multiple customers. 
+
+<!-- -->
+
+2.  1 customer can make multiple orders. 
+
+<!-- -->
+
+3.  1 order contain only 1 product, 1 order will belong to 1 customer. 
+
+<!-- -->
+
+4.  1 order can have multiple quantity of same product. 
+
+<!-- -->
+
+5.  1 customer can only give 1 rating per order. 
+
+![](images/clipboard-2567805533.png)
+
+-   Customer makes payment - There is one to many relationship between customer and payment. Payment is a weak entity here because without the customer, a payment record might lack context or be meaningless.Customer (customer_id) makes payment (payment_id) for order(order_id).
+
+    ![](images/clipboard-633478040.png)
+
+Below are the assumption and relationship set for customer makes payment:
+
+1.  1 customer can make multiple payments.
+
+2.  1 payment belong to only 1 customer.
+
+3.  1 customer can make 1 payment for multiple orders.
+
+4.  1 order will belong to only 1 payment, so partial payment of order cannot be made.
+
+5.  Payment is a weak entity since it cannot exist without the customer entity.
+
+![](images/clipboard-1554809883.png)
+
+-   Supplier sale product - There is one to many relationship between supplier and product. Supplier can sale many product and one product will belong to only one supplier. Supplier (supplier_id) sale a product(product_id). Product_id is a unique id for a product sold by a particular supplier. Each sale has a unique sale_id which related to a product_id which is related to a supplier_id.
+
+![](images/clipboard-920407296.png)
+
+Below are the assumption and relationship set for supplier sale product:
+
+1.  1 supplier can sale multiple products, 1 product can only be sold by 1 supplier.
+
+2.  1 sale will contain 1 product, and 1 sale will belong to 1 supplier.
+
+3.  1 supplier can have multiple sale for same product.
+
+4.  Same description product sold by different supplier will be considered as different product.
+
+![](images/clipboard-1971760021.png)
+
+-   Supplier sale settlement - There is one to many relationship between supplier and settlement. Settlement is a weak entity here because without the supplier, a settlement record might lack context or be meaningless.Supplier (supplier_id) receives settlement(settlement_id) for sale(sale_id).
+
+![](images/clipboard-1346572400.png)
+
+Below are the assumption and relationship set for Supplier sale settlement:
+
+1.  1 supplier can have multiple settlement, 1 settlement belongs to 1 supplier.
+
+2.  1 settlement can belong to multiple sale.
+
+3.  1 sale will belong to only 1 settlement, there is no partial settlement for sale.
+
+4.  Settlement is a weak entity since it cannot exist without the supplier and product entity
+
+5.  All sales settled in 1 settlement must belong to same supplier
+
+![](images/clipboard-1647755022.png)
+
+-   Supplier pays promotion - There is a one to many relationship between Supplier pays promotion. Promotion is a weak entity here because without the supplier, a Promotion record might lack context or be meaningless.Supplier (supplier_id) pays for promotion(promotion_id).
+
+![](images/clipboard-3208100390.png)
+
+Below are the assumption and relationship set for Supplier pays Promotion:
+
+1.  1 supplier can pay for multiple promotion, 1 promotion can only belong to 1 supplier
+
+2.  1 promotion can be used to advertise multiple products from 1 supplier
+
+3.  1 supplier can pay for multiple promotions together
+
+4.  Promotion is a weak entity since it cannot exist without the supplier entity\
+    ![](images/clipboard-523833148.png)
+
+-   Product belongs to Category - There is one to many relationship between Product and category. Product_id can fall into only 1 category_id and 1 category_id can have a lot of product_id association.
+
+![](images/clipboard-1286048785.png)
+
+Below are the assumption and relationship set for Product belongs to Category:
+
+1.  1 product belong to one category, 1 category can consist of multiple products.
+
+![](images/clipboard-1097219171.png)
+
+Category and categorization - There is self-referencing (one-to-many) relationship between category and sub-categorization. One category can have many sub-categorization but each categorization will belong to only one parent category.
+
+![](images/clipboard-436268871.png)
+
+Below are the assumption and relationship set for Category has a categorization:
+
+1.  Each category has one parent category and can have multiple child category.
+
+2.  A category is subcategorised into various categorisation that are included in category table.
+
+3.  A category can be parent category of one category and sub category of another category.
+
+![](images/clipboard-1331776846.png)
+
+## 1.2 SQL Database Schema Creation
+
+Once we have understanding and structure of E-R Diagram we move on to creation of Physical schema in SQL and data related assumption for structure of each table.
+
+### Physical Schema
+
+All the physical schema have been defined in file "data_schema.R" where we have created all tables structure in a database using command "CREATE" and defined structure of each attribute of table like how many characters, NOT NULL, date, integer, Float, Primary key and Foreign key references.
+
+1.  Order Schema - Order_id is the Primary key, Customer_id from Customer table and product_id from Product table are foreign key which can't be NULL. Order date can also not be NULL.
+
+    ![](images/clipboard-641434586.png)
+
+<!-- -->
+
+2.  Product Schema - product_id is the Primary key, Category_id from Category table and supplier_id from Supplier table are foreign key which can't be NULL. Price and Discount rate are Floats as they can be in decimal number.
+
+![](images/clipboard-2646635686.png)
+
+3.  Customer Schema - Customer_id is the Primary key for Customer table. Customer email address and customer phone can't be NULL as they are necessary attributes for customer registration.
+
+![](images/clipboard-3365372587.png)
+
+4.  Payment Schema - payment_id is the Primary key, order_id from Order table can't be NULL.
+
+    ![](images/clipboard-4083955446.png)
+
+5.  Supplier Schema - Supplier_id is the Primary key for Supplier table. Supplier email address and Supplier phone can't be NULL as they are necessary attributes for supplier registration. Platform fees and Tax rate are Floats as they can be expressed in decimal.
+
+![](images/clipboard-678882793.png)
+
+6.  Settlement Schema - settlement_id is the Primary key, sale_id from Sales table can't be NULL.
+
+![](images/clipboard-1194523059.png)
+
+7.  Sales Schema - sale_id is the Primary key, supplier_id from supplier table and product_id from Product table are foreign key which can't be NULL. Sale date can also not be NULL.
+
+![](images/clipboard-4104860474.png)
+
+8.  Category Schema
+
+    ![](images/clipboard-641341224.png)
+
+9.  Promotion Schema - Promotion_id is the Primary key, Supplier_id from Supplier table can't be NULL.
+
+    ![](images/clipboard-1162849960.png)
+
+All the schema created are normalized up to 3NF form for further steps.
+
+### Data-Related Assumption
+
+We have created the physical schema considering the below data related assumptions for each table. The constraints added are based logical reasoning which we have mentioned in data-related assumption below for each table added as a part of validation in Task 2.2.
+
+-   Customer table
+
+    1.  Customer can have only 1 address at any time.
+
+    2.  Customer address will be the delivery address as well.
+
+    3.  Customer can have 1 phone number at any time.
+
+    4.  Customer can have 1 email address at any time.
+
+    5.  Customer’s name is broken down into first and last name.
+
+    6.  There is no balance outstanding or in credit of a customer’s account.
+
+    7.  Registration date is before or same as 1st order date of a customer (add constraint as a trigger)
+
+-   Supplier table
+
+    1.  Supplier can have only 1 address at any time.
+    2.  Supplier can have 1 phone number at any time.
+    3.  Supplier can have 1 email address at any time.
+    4.  Supplier’s name is broken down into first and last name.
+    5.  There is no balance outstanding or in credit of a Supplier’s account.
+    6.  Registration date is before or same as 1st sale date of a supplier(add constraint as a trigger)
+    7.  Platform rate charged by e-commerce company can vary for each supplier but will not be more than 25%
+    8.  Tax rate is same for everyone i.e. 10%
+
+-   Product table
+
+    1.  Discount is different for each product (product_id) and will not be more than 20%.
+    2.  Prices of all product listed on e-commerce by supplier will be between min 5 pounds and maximum 100 pounds.
+    3.  Currency used in only Great Britain pounds (GBP).
+    4.  Product can have only 1 discount at any time.
+    5.  All Products are in stock at any point of time.
+    6.  There can be same product name for different suppliers.
+
+-   Order Table
+
+    1.  Order date is always after or equal to customer’s registration date. (add constraint as a trigger)
+    2.  Order approval date is always after or equal to order date and payment date.
+    3.  Order delivery date is always after or equal to order approval date.
+    4.  No one can order more than 20 quantities in 1 order.
+    5.  Order status can be only "pending","processing","shipped" or "delivered"
+    6.  Rating date is always after or equal to order delivery date.
+    7.  It is not necessary that all customer provides rating and rating comment.
+    8.  Rating will be on a scale of 1 to 5 only.
+
+-   Payment table
+
+    1.  Payment date is always after order date.
+    2.  There is only electronic payment option. No Cash on Delivery available.
+
+-   Sale table
+
+    1.  Sale date is the date when supplier sales i.e., same as when customer order that product.
+
+-   Settlement table
+
+    1.  Settlement date is always after sale date.
+    2.  Settlement methods can only be bank transfer, cash, cheque, bank draft, card.
+
+-   Promotion table
+
+    1.  Promotion start date is always after or equal to supplier’s registration date.
+    2.  Promotion start date is always before promotion end date.
+    3.  Promotion period cant be more than 30days for a specific promotion_id
+    4.  Promotion fees cant be more than 1000 GBP
+
+-   Category table
+
+    1.  Category name includes parent category and sub-category.
+
+Based on the above defined schema and data condition we perform the later task.
+
+```         
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
