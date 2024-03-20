@@ -5,7 +5,6 @@ library(readr)
 read_and_categorize_csv <- function(directory) {
   # Get list of CSV files in the directory
   csv_files <- list.files(directory, pattern = "\\.csv$", full.names = TRUE)
-  
   # Initialize a list to store data frames
   data_frames <- list(
     Category = data.frame(), # Initialize Category data frame
