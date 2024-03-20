@@ -1797,13 +1797,13 @@ dbGetQuery(my_connection,top_seller_settlement)
 
 We have created a GitHub repository for this project which can be accessed through this link: <https://github.com/Lunarfi/G19.>
 
-![GitHub Repository](images/MicrosoftTeams-image%20(2).png)
+![](images/MicrosoftTeams-image%20(2).png)
 
 ### Workflow setup
 
 data_schema.R is the script to create the schema for the database. Then, validation.R is run to check the stage 1 validation and ingest the data into the database. After the data is ingested, validation_stage_2 will run to ensure the duplication and referential integrity of the whole data. After the final validation, an automated report will be generated to show the monthly order, finance, as well as the top sellers and products of the current period.
 
-![Monthly Order and Finance Report](images/MicrosoftTeams-image%20(2).png){fig-align="center"}
+![](images/MicrosoftTeams-image%20(3).png){fig-align="center"}
 
 ![Top Sellers and Products](images/MicrosoftTeams-image%20(3).png)
 
