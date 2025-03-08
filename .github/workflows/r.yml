@@ -1,8 +1,9 @@
 name: workflow 
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Run every 24 hours
+  workflow_dispatch:  # Allows manual triggering from GitHub Actions
+  #schedule:
+    #- cron: '0 0 * * *' # Run every 24 hours
   push:
     branches: [ main ]
     paths:
